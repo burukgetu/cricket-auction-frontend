@@ -35,13 +35,38 @@ function App() {
     }
     return children;
   };
+  
+  const isLogged = ({ children }) => {
+    if (isAuthenticated()) {
+      if (isAdmin()) {
+        return <Navigate to="/admin-dashboard" replace />;
+      } else {
+        return <Navigate to="/bidders" replace />
+      }
+    }
+    return children;
+  };
 
   return (
     <Router>
       <Routes>
         {/* Public Routes */}
-        <Route path="/signup" element={<Signup />} />
-        <Route path="/login" element={<LoginPage />} />
+        <Route
+         path="/signup" 
+         element={
+          <isLogged>
+            <Signup/> 
+          </isLogged>
+        }
+        />
+        <Route
+         path="/login" 
+         element={
+          <isLogged>
+            <LoginPage />
+          </isLogged>
+        } 
+        />
 
         {/* Protected Routes */}
         <Route
