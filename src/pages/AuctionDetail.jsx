@@ -2,6 +2,21 @@ import { useState, useEffect } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import api from '../axios';
 
+export const roles = [
+  { value: "OpeningBatsman", label: "Opening Batsman" },
+  { value: "MiddleOrderBatsman", label: "Middle Order Batsman" },
+  { value: "LowerOrderBatsman", label: "Lower Order Batsman" },
+  { value: "FastBowler", label: "Fast Bowler" },
+  { value: "MediumPaceBowler", label: "Medium Pace Bowler" },
+  { value: "OffSpinner", label: "Off Spinner" },
+  { value: "LegSpinner", label: "Leg Spinner" },
+  { value: "AllRounder", label: "All Rounder" },
+  { value: "Wicketkeeper", label: "Wicketkeeper" },
+  { value: "SlipFielder", label: "Slip Fielder" },
+  { value: "CloseInFielder", label: "Close-In Fielder" },
+  { value: "BoundaryFielder", label: "Boundary Fielder" },
+];
+
 const AuctionDetail = () => {
   const { auctionId } = useParams();
   const navigate = useNavigate();
@@ -48,7 +63,7 @@ const AuctionDetail = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     setError('');
-    console.log({playerId, startingBid, auctionEndTime})
+    // console.log({playerId, startingBid, auctionEndTime})
     if (!playerId || !auctionEndTime) {
       return alert('Please fill in all required fields.');
     }
@@ -63,7 +78,7 @@ const AuctionDetail = () => {
         });
         alert('Auction created successfully!');
         navigate('/admin-dashboard');
-        console.log(response.data); // Optionally log the response
+        // console.log(response.data); // Optionally log the response
       } catch (error) {
         console.error('Error creating auction:', error);
         setError(error.response?.data?.message || 'Something went wrong!');
@@ -78,7 +93,7 @@ const AuctionDetail = () => {
       });
       alert('Auction Edited successfully!');
       navigate('/admin-dashboard');
-      console.log(response.data); // Optionally log the response
+      // console.log(response.data); // Optionally log the response
     } catch (error) {
       console.error('Error creating auction:', error);
       setError(error.response?.data?.message || 'Something went wrong!');

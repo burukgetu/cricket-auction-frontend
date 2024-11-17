@@ -1,15 +1,15 @@
 // src/components/Header.js
-import React from 'react';
 import { Link } from 'react-router-dom';
 
 const Header = () => {
   return (
-    <header>
-      <nav>
+    <header className=' flex justify-between px-4 items-center h-16'>
+      <h1 className='font-extrabold text-3xl'>Auction
+        <span className='text-xl font-bold'>.co</span></h1>
+      <nav className='flex gap-3 font-bold items-center'>
         <Link to="/">Home</Link>
-        <Link to="/auction">Auction</Link>
-        <Link to="/login">Login</Link>
-        <Link to="/register">Register</Link>
+        <Link to="/my-bids">My bids</Link>
+        <Link to="/login">Logout</Link>
       </nav>
     </header>
   );

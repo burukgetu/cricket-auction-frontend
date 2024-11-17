@@ -4,8 +4,8 @@ import api from '../axios';
 import { PanelLeftClose, PanelRightClose, Trash2, UserPen } from 'lucide-react';
 // import Sidebar from '../components/Sidebar';
 
-const AdminDashboard = () => {
-  const [auctions, setAuctions] = useState([]);
+const PlayersList = () => {
+  const [players, setPlayers] = useState([]);
   const [isOpen, setIsOpen] = useState(true);
   const [secondButton, setSecondButton] = useState(false);
   const navigate = useNavigate();
@@ -20,22 +20,23 @@ const AdminDashboard = () => {
   }
 
   const handleDelete = async (id) => {
-    const res = await api.delete(`/auction/${id}`);
-    setAuctions(auctions.filter((auction) => auction._id !== id));
+    const res = await api.delete(`/players/${id}`);
+    setPlayers(players.filter((auction) => auction._id !== id));
     alert(res.data.message)
   };
 
-  const getAuctions = async () => {
+  const getPLayers = async () => {
     try {
-      const response = await api.get('/auction'); // Make the GET request
-      setAuctions(response.data); // Set auctions data in state
+      const response = await api.get('/players'); // Make the GET request
+        setPlayers(response.data); // Set auctions data in state
+        // console.log(response.data); // Set auctions data in state
     } catch (error) {
       alert(error.response ? error.response.data.message : 'Something went wrong');
     }
   };
 
   useEffect(() => {
-    getAuctions()
+    getPLayers()
   }, [])
 
   useEffect(() => {
@@ -101,41 +102,39 @@ const AdminDashboard = () => {
               <button onClick={toggleSidebar}>
                 {isOpen ? <PanelLeftClose /> : <PanelRightClose />}
               </button>
-              <h2 className="text-2xl font-bold text-gray-800">Auctions</h2>
+              <h2 className="text-2xl font-bold text-gray-800">Players</h2>
             </div>
             <Link
-              to="/create-auction"
+              to="/create-player"
               className="bg-indigo-600 text-white px-4 py-2 rounded-md hover:bg-indigo-700"
             >
-              Create Auction
+              Create Player
             </Link>
           </div>
 
           <div className="overflow-x-auto bg-white shadow-lg rounded-lg">
             <table className="min-w-full table-auto">
-              <thead className="bg-gray-200">
-                <tr>
+              <thead className="bg-gray-200 w-full">
+                <tr className='w-full border-2'>
                   <th className="px-4 py-2 text-left">Player Name</th>
-                  <th className="px-4 py-2 text-left">Status</th>
-                  <th className="px-4 py-2 text-left">Date</th>
+                  <th className="px-4 py-2 text-left">Role</th>
                   <th className="px-4 py-2 text-center">Actions</th>
                 </tr>
               </thead>
               <tbody>
-                {auctions.map((auction) => (
-                  <tr key={auction.id} className="border-t">
-                    <td className="px-4 py-2">{auction.playerId.name}</td>
-                    <td className="px-4 py-2">{auction.auctionStatus}</td>
-                    <td className="px-4 py-2">{auction.auctionEndTime}</td>
+                {players.map((player) => (
+                  <tr key={player.id} className="border-t">
+                    <td className="px-4 py-2">{player.name}</td>
+                    <td className="px-4 py-2">{player.role}</td>
                     <td className="px-4 py-2 flex gap-3 justify-center text-center">
                       <Link
-                        to={`/auction/${auction._id}`}
+                        to={`/player/${player._id}`}
                         className="text-blue-500 hover:underline"
                       >
                         <UserPen className='w-8' width={20}/>
                       </Link>
                       <button
-                        onClick={() => handleDelete(auction._id)}
+                        onClick={() => handleDelete(player._id)}
                         className="text-red-500 hover:underline"
                       >
                         <Trash2 />
@@ -153,4 +152,4 @@ const AdminDashboard = () => {
   );
 };
 
-export default AdminDashboard;
+export default PlayersList;

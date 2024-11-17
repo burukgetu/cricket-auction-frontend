@@ -3,15 +3,17 @@ import { Link } from 'react-router-dom';
 import api from '../axios'
 import Header from '../components/Header';
 
-const BiddersPage = () => {
-  const [auctions, setAuctions] = useState([]);
+const MyBids = () => {
+  const [bids, setBids] = useState([]);
 
   // Fetch active auctions from backend or hardcoded data
   useEffect(() => {
     // Sample data, replace this with an API call to fetch active auctions
     const fetchActiveAuctions = async () => {
-      const response = await api.get('/auction');
-      setAuctions(response.data);
+        const user = JSON.parse(localStorage.getItem('user'))
+      const response = await api.get(`/bid/${user.id}`);
+      setBids(response.data);
+      console.log(response.data);
     };
 
     fetchActiveAuctions();
@@ -36,7 +38,7 @@ const BiddersPage = () => {
                 </tr>
               </thead>
               <tbody>
-                {auctions.map((auction) => (
+                {bids.map((auction) => (
                   <tr key={auction._id} className="border-b hover:bg-gray-50">
                     <td className="py-3 px-4">{auction.playerId.name}</td>
                     <td className="py-3 px-4">{auction.playerId.role}</td>
@@ -61,4 +63,4 @@ const BiddersPage = () => {
   );
 };
 
-export default BiddersPage;
+export default MyBids;
